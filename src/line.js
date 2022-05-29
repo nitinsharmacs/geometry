@@ -73,8 +73,8 @@ class Line {
   }
 
   slope() {
-    const yDelta = this.start.y - this.end.y;
-    const xDelta = this.start.x - this.end.x;
+    const yDelta = this.end.y - this.start.y;
+    const xDelta = this.end.x - this.start.x;
     return yDelta / xDelta;
   }
 
