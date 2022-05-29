@@ -50,12 +50,22 @@ const angle = (slope) => {
   return Math.atan(slope);
 };
 
+const isStartAxisLarger = (start, end) => {
+  return end.x < start.x || end.y < start.y;
+};
+
 class Line {
   constructor(start, end) {
     this.start = new Point(start.x, start.y);
     this.end = new Point(end.x, end.y);
   }
 
+  rotationPoint() {
+    if (isStartAxisLarger(this.start, this.end)) {
+      return this.end;
+    }
+    return this.start;
+  }
   midPoint() {
     const xMid = (this.start.x + this.end.x) / 2
     const yMid = (this.start.y + this.end.y) / 2
@@ -79,12 +89,13 @@ class Line {
   }
 
   toHTML() {
+    const rotationPoint = this.rotationPoint();
     const style = new Style({
       'background-color': 'black',
       'transform-origin': 'left top',
       position: 'absolute',
-      left: `${this.start.x}px`,
-      top: `${this.start.y}px`,
+      left: `${rotationPoint.x}px`,
+      top: `${rotationPoint.y}px`,
       width: `${this.length()}px`,
       height: '2px',
       transform: transformRotate(angle(this.slope())),
